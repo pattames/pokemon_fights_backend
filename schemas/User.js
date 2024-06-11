@@ -38,17 +38,21 @@ userSchema.statics.signup = async function (username, password) {
   //   );
   // }
 
-  const hasLettersAndNumbers = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/.test(password);
-  if (!hasLettersAndNumbers) {
-    throw Error("Password must contain both letters and numbers.");
-  }
+  // const hasLettersAndNumbers = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/.test(password);
+  // if (!hasLettersAndNumbers) {
+  //   throw Error("Password must contain both letters and numbers.");
+  // }
 
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
 
   const defaultPokemons = ["1", "4", "7"];
 
-  const user = await this.create({ username, password: hash, pokemons: defaultPokemons });
+  const user = await this.create({
+    username,
+    password: hash,
+    pokemons: defaultPokemons,
+  });
 
   return user;
 };
